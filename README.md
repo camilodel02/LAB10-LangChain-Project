@@ -59,7 +59,7 @@ The project is organized in layers so each concern stays isolated and easy to ev
 - **Domain capabilities**: `src/agent/tools/*` defines reusable tools such as `calculator` and `current_time`.
 - **Configuration layer**: `src/config/env.ts` loads and validates environment variables with `zod`.
 
-For a deeper architectural breakdown, see `docs/architecture.md`.
+For a deeper architectural breakdown, see `docs/architecture.md`. For security guardrails, see `docs/guardrails.md`.
 
 ## Project structure
 
@@ -68,6 +68,7 @@ For a deeper architectural breakdown, see `docs/architecture.md`.
 - `src/agent`: agent setup, prompt, tools, and runner.
 - `tests`: Vitest test suite.
 - `docs/architecture.md`: architecture documentation.
+- `docs/guardrails.md`: guardrails implementation guide.
 
 ## Add a new tool
 
