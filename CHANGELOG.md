@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Agent focused on contaduría: tools `registrar_egreso` and `listar_tabla_egresos`, in-memory store `egresosStore`.
+- Removed legacy tools `calculator` and `current_time` and their tests.
+- Documentation updated (README, architecture, brief, plan, guardrails).
+
 ## 0.1.1 - 2026-03-22
 
 - Migrated provider configuration from OpenAI env keys to OpenRouter env keys.

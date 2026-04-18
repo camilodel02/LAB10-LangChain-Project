@@ -1,6 +1,6 @@
 # 10Xbuilder Agents
 
-Agent with LangChain and TypeScript (ESM) that uses tools to solve calculations and return the current time.
+Agent with LangChain and TypeScript (ESM) oriented to **contaduría**: registra egresos por chat, los guarda en una tabla en memoria con **ID de egreso** por fila y puede listar la tabla en Markdown.
 
 ## Requirements
 
@@ -33,10 +33,16 @@ OPENROUTER_APP_TITLE=10Xbuilder Agents
 npm run dev
 ```
 
-With a custom question:
+With a custom message:
 
 ```bash
-npm run dev -- "What is 25% of 240 and what time is it now?"
+npm run dev -- "Registra un egreso con NIT 900123456-7, valor 500000, concepto papelería, en letras QUINIENTOS MIL PESOS, fecha 18/04/2026, emisor Librería Ejemplo SAS."
+```
+
+To list registered rows:
+
+```bash
+npm run dev -- "Muéstrame la tabla de egresos."
 ```
 
 ## Scripts
@@ -56,7 +62,7 @@ The project is organized in layers so each concern stays isolated and easy to ev
 - **Interface layer**: `src/index.ts` provides a CLI entry point and sends user input to the agent runtime.
 - **Application layer**: `src/agent/runAgent.ts` exposes a single execution function and supports dependency injection for testing.
 - **Composition layer**: `src/agent/createAgent.ts` assembles model, prompt, and tools into an `AgentExecutor`.
-- **Domain capabilities**: `src/agent/tools/*` defines reusable tools such as `calculator` and `current_time`.
+- **Domain capabilities**: `src/agent/tools/*` defines tools (`registrar_egreso`, `listar_tabla_egresos`); `src/agent/store/egresosStore.ts` holds the in-memory table.
 - **Configuration layer**: `src/config/env.ts` loads and validates environment variables with `zod`.
 
 For a deeper architectural breakdown, see `docs/architecture.md`. For security guardrails, see `docs/guardrails.md`.
@@ -65,7 +71,7 @@ For a deeper architectural breakdown, see `docs/architecture.md`. For security g
 
 - `src/index.ts`: CLI entry point.
 - `src/config/env.ts`: environment loading and validation.
-- `src/agent`: agent setup, prompt, tools, and runner.
+- `src/agent`: agent setup, prompt, tools, store, and runner.
 - `tests`: Vitest test suite.
 - `docs/architecture.md`: architecture documentation.
 - `docs/guardrails.md`: guardrails implementation guide.
@@ -79,4 +85,5 @@ For a deeper architectural breakdown, see `docs/architecture.md`. For security g
 
 ## Notes
 
-The `calculator` tool currently uses `Function(...)`. For production usage, replace it with a safe parser/evaluator.
+- Data is stored **in memory only** while the process runs; restarting the CLI clears the table. Persist to a file or database if you need durability.
+- Fields per row: NIT, valor del egreso, razón, valor en letras, fecha, nombre del emisor de la factura, plus sistema-assigned `idEgreso`.
