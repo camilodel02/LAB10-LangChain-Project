@@ -6,3 +6,4 @@ coverage/
 .env.*
 !.env.example
 env.local
+LAB10-LangChain-Project10X-Builders-langchain-agent/env.local
